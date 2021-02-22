@@ -1,17 +1,20 @@
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
+import { Provider } from "react-redux";
 import React from "react";
-import RecipesList from './RecipesList'
+import RecipesList from "./RecipesList";
 
 export const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/">
-          <RecipesList />
-        </Route>
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route path="/">
+            <RecipesList />
+          </Route>
+        </Switch>
+      </Router>
+    </Provider>
   );
 };
 
