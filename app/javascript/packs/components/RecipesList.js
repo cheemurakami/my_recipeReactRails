@@ -1,11 +1,15 @@
+import * as a from "../rdx/actions";
+
 import React, { useEffect } from "react";
 
-export const RecipesList = () => {
+import { connect } from 'react-redux'
+
+export const RecipesList = ({dispatch}) => {
 
   useEffect(() => {
     fetch("/api/recipes/")
       .then((resp) => resp.json())
-      .then((resp) => console.log(resp))
+      .then((resp) => a.loadedRecipes(resp))
     return () => {};
   }, []);
   return (
@@ -15,4 +19,10 @@ export const RecipesList = () => {
   );
 };
 
-export default RecipesList;
+const mapStateToProps = (state) => {
+  return{
+    recipes: state.recipesReducer.recipes
+  }
+}
+
+export default connect(mapStateToProps)(RecipesList)
