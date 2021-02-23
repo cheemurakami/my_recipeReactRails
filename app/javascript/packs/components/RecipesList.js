@@ -9,7 +9,7 @@ export const RecipesList = ({dispatch}) => {
   useEffect(() => {
     fetch("/api/recipes/")
       .then((resp) => resp.json())
-      .then((resp) => a.loadedRecipes(resp))
+      .then((resp) => dispatch(a.loadedRecipes(resp)))
     return () => {};
   }, []);
   return (
@@ -20,6 +20,7 @@ export const RecipesList = ({dispatch}) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state.recipesReducer)
   return{
     recipes: state.recipesReducer.recipes
   }
