@@ -1,5 +1,6 @@
 import * as a from "../rdx/actions";
 
+import { Col, Container, Row } from "react-bootstrap";
 import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
@@ -13,17 +14,24 @@ export const RecipesList = ({ dispatch, recipes }) => {
   }, []);
 
   return (
-    <>
-    <h3>Recipe List</h3>
-      {recipes &&
-        recipes.map((recipe) => {
-          return <p key={recipe.id}>{recipe.name}</p>;
-        })}
-    </>
+    <Container>
+      <h3>Trending Recipes</h3>
+      <Row>
+        {recipes &&
+          recipes.map((recipe) => {
+            return (
+              <Col lg={3} md={4} sm={6} xs={12}>
+                <p key={recipe.id}>{recipe.name}</p>
+              </Col>
+            );
+          })}
+      </Row>
+    </Container>
   );
 };
 
 const mapStateToProps = (state) => {
+  console.log(state.recipesReducer.recipes);
   return {
     recipes: state.recipesReducer.recipes,
   };
