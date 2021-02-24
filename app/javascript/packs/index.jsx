@@ -1,6 +1,9 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../stylesheets/custom.scss'
+
+import App from './components/App'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/App'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
