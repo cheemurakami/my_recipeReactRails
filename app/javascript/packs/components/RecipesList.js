@@ -20,8 +20,8 @@ export const RecipesList = ({ dispatch, recipes }) => {
         {recipes &&
           recipes.map((recipe) => {
             return (
-              <Col lg={3} md={4} sm={6} xs={12}>
-                <p key={recipe.id}>{recipe.name}</p>
+              <Col lg={3} md={4} sm={6} xs={12} key={recipe.id}>
+                <p>{recipe.name}</p>
               </Col>
             );
           })}
