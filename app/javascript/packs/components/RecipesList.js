@@ -33,15 +33,15 @@ export const RecipesList = ({ dispatch, recipes }) => {
             recipes.map((recipe) => {
               return (
                 <Col lg={3} md={4} sm={6} xs={12} key={recipe.id}>
-                  <Link to={`/recipe/${recipe.id}`}>
-                    <div className="recipe-container">
+                  <div className="recipe-container">
+                    <Link to={`/recipe/${recipe.id}`}>
                       <img
                         className="recipe-list-img"
                         src="https://img.buzzfeed.com/video-api-prod/assets/7841a26fa9764c2dbb34c845fb5f1f9c/BFV27602_MicrowaveCheesecake-ThumbA1080.jpg?resize=300:*&output-format=jpg&output-quality=auto"
                       />
                       <p>{recipe.name}</p>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 </Col>
               );
             })}

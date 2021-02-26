@@ -17,7 +17,7 @@ export const Recipe = (props) => {
   return (
     <Container>
       <Row>
-        <h2>{recipe.name}</h2>
+        <h1>{recipe.name}</h1>
       </Row>
     </Container>
   );
