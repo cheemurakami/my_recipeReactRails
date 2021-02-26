@@ -6,5 +6,9 @@ Rails.application.routes.draw do
     end
   end
   root 'homepage#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  # IMPORTANT #
+  # This `match` must be the *last* route in routes.rb 
+  # This sends to react app where react router will choose the component(Not rails routes!)'homepage#index' => index.html.erb empty page(This is where react lives)
+  match '*path', to: 'homepage#index', via: :all
 end
