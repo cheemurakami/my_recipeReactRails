@@ -19,6 +19,18 @@ export const Recipe = (props) => {
       <Row>
         <h1>{recipe.name}</h1>
       </Row>
+      <Row>
+        <Col lg={4} md={6} sm={6} xs={12}>
+          <h4>Ingredients</h4>
+        </Col>
+        <Col lg={8} md={6} sm={6} xs={12}>
+          <h4>Preparation</h4>
+        </Col>
+      </Row>
+      <Row>
+        <h4>Submit a recipe</h4>
+        <p>Have a recipe of your own to share? <Link to="/recipe/create" style={{color: "#e40754"}}>Submit your recipe here.<Link></p>
+      </Row>
     </Container>
   );
 };
