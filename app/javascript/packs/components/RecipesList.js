@@ -2,8 +2,8 @@ import * as a from "../rdx/actions";
 
 import { Col, Container, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
+
 import { connect } from "react-redux";
 
 export const RecipesList = ({ dispatch, recipes }) => {
