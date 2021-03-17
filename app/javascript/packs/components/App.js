@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import React from "react";
 import Recipe from "./Recipe";
 import RecipesList from "./RecipesList";
+import RecipeSubmit from "./RecipeSubmit";
 import { store } from "../rdx/stores";
 
 export const App = () => {
@@ -13,6 +14,9 @@ export const App = () => {
         <Switch>
           <Route path="/recipe/:id">
             <Recipe />
+          </Route>
+          <Route path="/submit">
+            <RecipeSubmit />
           </Route>
           <Route path="/">
             <RecipesList />

@@ -30,9 +30,11 @@ export const Recipe = (props) => {
       </Row>
       <Row>
         <h4>Submit a recipe</h4>
+      </Row>
+      <Row>
         <p>
           Have a recipe of your own to share?{" "}
-          <Link to="/recipe/create" style={{ color: "#e40754" }}>
+          <Link to="/submit" style={{ color: "#e40754" }}>
             Submit your recipe here.
           </Link>
         </p>
