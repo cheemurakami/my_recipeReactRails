@@ -4,6 +4,24 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 export const RecipeSubmit = (props) => {
+  const submissionHandler = (e) => {
+    e.preventDefault();
+    const recipeData = {
+      recipe: {
+        name: e.target.title.value,
+        ingredients_attributes: [{ ingredients: e.target.ingredient.value }],
+      },
+    };
+    fetch("/api/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(recipeData),
+    }).then((resp) => console.log(resp));
+  };
+
   return (
     <Container>
       <Row className="mt-5">
@@ -24,36 +42,31 @@ export const RecipeSubmit = (props) => {
           </p>
         </Row>
         <Row>
-          <Form>
+          <Form onSubmit={submissionHandler}>
             <Row>
               <Col lg={6} md={6} sm={12} xs={12} className="pr-5">
                 <Form.Group>
                   <Form.Label>Recipe title</Form.Label>
                   <Form.Control
-                    type="recipe title"
+                    type="text"
+                    name="title"
                     placeholder="Enter recipe title"
+                    style={{ width: 250 }}
                   />
                 </Form.Group>
 
                 <Form.Group>
                   <Form.Label>Ingredients</Form.Label>
                   <Form.Control
-                    type="ingredients"
+                    type="text"
+                    name="ingredient"
                     placeholder="1 cup all-purpose flour"
+                    style={{ width: 250 }}
                   />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control type="ingredients" placeholder="" />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control type="ingredients" placeholder="" />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control type="ingredients" placeholder="" />
                 </Form.Group>
               </Col>
               <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
-                <Form.Group controlId="exampleForm.SelectCustom">
+                {/* <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label>Number of Servings</Form.Label>
                   <Form.Control as="select" custom>
                     <option>1</option>
@@ -71,9 +84,9 @@ export const RecipeSubmit = (props) => {
                     placeholder="Cut each eggplant into about ½-inch (1-cm) thick round slices."
                   />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group> 
                   <Form.Control type="steps" as="textarea" placeholder="" />
-                </Form.Group>
+                </Form.Group>*/}
 
                 <Button
                   style={{ backgroundColor: "#e40754", border: "none" }}
