@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 
 export const RecipeSubmit = (props) => {
+  const [ingredients, setIngredients] = useState({});
   const submissionHandler = (e) => {
     e.preventDefault();
+    const formObject = Object.fromEntries(new FormData(e.target));
+    const formArr = Object.entries(formObject);
+    const ingredientsArr = formArr.filter((pair) =>
+      pair[0].includes("ingredient")
+    );
+
+    const ingredientsAttributes = ingredientsArr.map((ingredient) => {
+      return {
+        ingredients: ingredient[1],
+      };
+    });
+
     const recipeData = {
       recipe: {
-        name: e.target.title.value,
-        ingredients_attributes: [{ ingredients: e.target.ingredient.value }],
+        name: formObject.title,
+        ingredients_attributes: ingredientsAttributes,
       },
     };
     fetch("/api/recipes", {
@@ -59,8 +72,16 @@ export const RecipeSubmit = (props) => {
                   <Form.Label>Ingredients</Form.Label>
                   <Form.Control
                     type="text"
-                    name="ingredient"
+                    name="ingredient1"
                     placeholder="1 cup all-purpose flour"
+                    style={{ width: 250 }}
+                    onChange={() => setIngredients(event.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    name="ingredient2"
                     style={{ width: 250 }}
                   />
                 </Form.Group>
