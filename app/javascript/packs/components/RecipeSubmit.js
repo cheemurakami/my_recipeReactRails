@@ -52,7 +52,7 @@ export const RecipeSubmit = () => {
             BuzzFeed Materials Release
           </p>
         </Row>
-        <Row>
+        <Row className="mt-5">
           <Form onSubmit={submissionHandler}>
             <Row>
               <Col
@@ -91,14 +91,13 @@ export const RecipeSubmit = () => {
 
                 <Row
                   className="add-ingredients"
-                  style={{ justifyContent: "center" }}
                   onClick={() => setFields(fields.concat(""))}
                 >
-                  <p>+ Add more ingredients</p>
+                  <p className="add-ingredients">+ Add more ingredients</p>
                 </Row>
               </Col>
               <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
-                {/* <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label>Number of Servings</Form.Label>
                   <Form.Control as="select" custom>
                     <option>1</option>
@@ -118,16 +117,16 @@ export const RecipeSubmit = () => {
                 </Form.Group>
                 <Form.Group> 
                   <Form.Control type="steps" as="textarea" placeholder="" />
-                </Form.Group>*/}
+                </Form.Group>
+                <Button
+                  style={{ backgroundColor: "#e40754", border: "none" }}
+                  color="#e40754"
+                  type="submit"
+                >
+                  Submit
+                </Button>
               </Col>{" "}
             </Row>
-            <Button
-              style={{ backgroundColor: "#e40754", border: "none" }}
-              color="#e40754"
-              type="submit"
-            >
-              Submit
-            </Button>
           </Form>
         </Row>
       </Row>

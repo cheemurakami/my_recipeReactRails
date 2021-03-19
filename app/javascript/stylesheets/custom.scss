@@ -25,7 +25,8 @@ body {
   width: 100%;
 }
 .add-ingredients{
-  justify-content: center;
+  font-size: 14px;
+  justify-content: flex-end;
   &:hover{
     p{
       cursor: pointer;
