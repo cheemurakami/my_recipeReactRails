@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
-import { connect } from "react-redux";
+export const RecipeSubmit = () => {
+  const [fields, setFields] = useState([""]);
 
-export const RecipeSubmit = (props) => {
-  const [ingredients, setIngredients] = useState({});
   const submissionHandler = (e) => {
     e.preventDefault();
+
     const formObject = Object.fromEntries(new FormData(e.target));
     const formArr = Object.entries(formObject);
     const ingredientsArr = formArr.filter((pair) =>
       pair[0].includes("ingredient")
     );
-
     const ingredientsAttributes = ingredientsArr.map((ingredient) => {
       return {
         ingredients: ingredient[1],
       };
     });
-
     const recipeData = {
       recipe: {
         name: formObject.title,
@@ -57,7 +55,14 @@ export const RecipeSubmit = (props) => {
         <Row>
           <Form onSubmit={submissionHandler}>
             <Row>
-              <Col lg={6} md={6} sm={12} xs={12} className="pr-5">
+              <Col
+                lg={6}
+                md={6}
+                sm={12}
+                xs={12}
+                className="pr-5"
+                style={{ justifyContent: "center" }}
+              >
                 <Form.Group>
                   <Form.Label>Recipe title</Form.Label>
                   <Form.Control
@@ -67,24 +72,30 @@ export const RecipeSubmit = (props) => {
                     style={{ width: 250 }}
                   />
                 </Form.Group>
-
                 <Form.Group>
                   <Form.Label>Ingredients</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="ingredient1"
-                    placeholder="1 cup all-purpose flour"
-                    style={{ width: 250 }}
-                    onChange={() => setIngredients(event.target.value)}
-                  />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    name="ingredient2"
-                    style={{ width: 250 }}
-                  />
-                </Form.Group>
+                {fields.map((_, i) => {
+                  return (
+                    <Form.Group>
+                      <Form.Control
+                        key={i}
+                        type="text"
+                        name={"ingredient" + i}
+                        style={{ width: 250 }}
+                        placeholder={i == 0 ? "1 cup all-purpose flour" : null}
+                      />
+                    </Form.Group>
+                  );
+                })}
+
+                <Row
+                  className="add-ingredients"
+                  style={{ justifyContent: "center" }}
+                  onClick={() => setFields(fields.concat(""))}
+                >
+                  <p>+ Add more ingredients</p>
+                </Row>
               </Col>
               <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
                 {/* <Form.Group controlId="exampleForm.SelectCustom">
@@ -108,16 +119,15 @@ export const RecipeSubmit = (props) => {
                 <Form.Group> 
                   <Form.Control type="steps" as="textarea" placeholder="" />
                 </Form.Group>*/}
-
-                <Button
-                  style={{ backgroundColor: "#e40754", border: "none" }}
-                  color="#e40754"
-                  type="submit"
-                >
-                  Submit
-                </Button>
               </Col>{" "}
             </Row>
+            <Button
+              style={{ backgroundColor: "#e40754", border: "none" }}
+              color="#e40754"
+              type="submit"
+            >
+              Submit
+            </Button>
           </Form>
         </Row>
       </Row>
@@ -125,6 +135,4 @@ export const RecipeSubmit = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps)(RecipeSubmit);
+export default RecipeSubmit;
