@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
-import { connect } from "react-redux";
+export const RecipeSubmit = () => {
+  const [fields, setFields] = useState([""]);
 
-export const RecipeSubmit = (props) => {
+  const submissionHandler = (e) => {
+    e.preventDefault();
+
+    const formObject = Object.fromEntries(new FormData(e.target));
+    const formArr = Object.entries(formObject);
+    const ingredientsArr = formArr.filter((pair) =>
+      pair[0].includes("ingredient")
+    );
+    const ingredientsAttributes = ingredientsArr.map((ingredient) => {
+      return {
+        ingredients: ingredient[1],
+      };
+    });
+    const recipeData = {
+      recipe: {
+        name: formObject.title,
+        ingredients_attributes: ingredientsAttributes,
+      },
+    };
+    fetch("/api/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(recipeData),
+    }).then((resp) => console.log(resp));
+  };
+
   return (
     <Container>
       <Row className="mt-5">
@@ -23,34 +52,49 @@ export const RecipeSubmit = (props) => {
             BuzzFeed Materials Release
           </p>
         </Row>
-        <Row>
-          <Form>
+        <Row className="mt-5">
+          <Form onSubmit={submissionHandler}>
             <Row>
-              <Col lg={6} md={6} sm={12} xs={12} className="pr-5">
+              <Col
+                lg={6}
+                md={6}
+                sm={12}
+                xs={12}
+                className="pr-5"
+                style={{ justifyContent: "center" }}
+              >
                 <Form.Group>
                   <Form.Label>Recipe title</Form.Label>
                   <Form.Control
-                    type="recipe title"
+                    type="text"
+                    name="title"
                     placeholder="Enter recipe title"
+                    style={{ width: 250 }}
                   />
                 </Form.Group>
-
                 <Form.Group>
                   <Form.Label>Ingredients</Form.Label>
-                  <Form.Control
-                    type="ingredients"
-                    placeholder="1 cup all-purpose flour"
-                  />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Control type="ingredients" placeholder="" />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control type="ingredients" placeholder="" />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control type="ingredients" placeholder="" />
-                </Form.Group>
+                {fields.map((_, i) => {
+                  return (
+                    <Form.Group>
+                      <Form.Control
+                        key={i}
+                        type="text"
+                        name={"ingredient" + i}
+                        style={{ width: 250 }}
+                        placeholder={i == 0 ? "1 cup all-purpose flour" : null}
+                      />
+                    </Form.Group>
+                  );
+                })}
+
+                <Row
+                  className="add-ingredients"
+                  onClick={() => setFields(fields.concat(""))}
+                >
+                  <p className="add-ingredients">+ Add more ingredients</p>
+                </Row>
               </Col>
               <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
                 <Form.Group controlId="exampleForm.SelectCustom">
@@ -71,10 +115,9 @@ export const RecipeSubmit = (props) => {
                     placeholder="Cut each eggplant into about ½-inch (1-cm) thick round slices."
                   />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group> 
                   <Form.Control type="steps" as="textarea" placeholder="" />
                 </Form.Group>
-
                 <Button
                   style={{ backgroundColor: "#e40754", border: "none" }}
                   color="#e40754"
@@ -91,6 +134,4 @@ export const RecipeSubmit = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps)(RecipeSubmit);
+export default RecipeSubmit;

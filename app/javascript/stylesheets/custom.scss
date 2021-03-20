@@ -24,3 +24,13 @@ body {
 .recipe-list-img {
   width: 100%;
 }
+.add-ingredients{
+  font-size: 14px;
+  justify-content: flex-end;
+  &:hover{
+    p{
+      cursor: pointer;
+      color: #e40754;
+    }
+  }
+}
