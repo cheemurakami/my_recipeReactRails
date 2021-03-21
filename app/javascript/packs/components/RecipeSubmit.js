@@ -77,9 +77,8 @@ export const RecipeSubmit = () => {
                 </Form.Group>
                 {fields.map((_, i) => {
                   return (
-                    <Form.Group>
+                    <Form.Group key={i}>
                       <Form.Control
-                        key={i}
                         type="text"
                         name={"ingredient" + i}
                         style={{ width: 250 }}
@@ -107,7 +106,7 @@ export const RecipeSubmit = () => {
                     <option>5</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group>
+                {/* <Form.Group>
                   <Form.Label>Directions</Form.Label>
                   <Form.Control
                     type="steps"
@@ -117,7 +116,7 @@ export const RecipeSubmit = () => {
                 </Form.Group>
                 <Form.Group> 
                   <Form.Control type="steps" as="textarea" placeholder="" />
-                </Form.Group>
+                </Form.Group> */}
                 <Button
                   style={{ backgroundColor: "#e40754", border: "none" }}
                   color="#e40754"
