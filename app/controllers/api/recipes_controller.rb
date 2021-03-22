@@ -10,13 +10,12 @@ class Api::RecipesController < ApplicationController
   end
 
   def create
-    
     recipe = Recipe.create(recipe_params)
     json_response(recipe)
   end
 
   private
   def recipe_params
-    params.require(:recipe).permit(:name, ingredients_attributes: [:ingredients])
+    params.require(:recipe).permit(:name, :number, ingredients_attributes: [:ingredients])
   end
 end

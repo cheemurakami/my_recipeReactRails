@@ -20,6 +20,7 @@ export const RecipeSubmit = () => {
     const recipeData = {
       recipe: {
         name: formObject.title,
+        number: formObject.number,
         ingredients_attributes: ingredientsAttributes,
       },
     };
@@ -72,34 +73,14 @@ export const RecipeSubmit = () => {
                     style={{ width: 250 }}
                   />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Ingredients</Form.Label>
-                </Form.Group>
-                {fields.map((_, i) => {
-                  return (
-                    <Form.Group>
-                      <Form.Control
-                        key={i}
-                        type="text"
-                        name={"ingredient" + i}
-                        style={{ width: 250 }}
-                        placeholder={i == 0 ? "1 cup all-purpose flour" : null}
-                      />
-                    </Form.Group>
-                  );
-                })}
-
-                <Row
-                  className="add-ingredients"
-                  onClick={() => setFields(fields.concat(""))}
-                >
-                  <p className="add-ingredients">+ Add more ingredients</p>
-                </Row>
-              </Col>
-              <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
                 <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label>Number of Servings</Form.Label>
-                  <Form.Control as="select" custom>
+                  <Form.Control
+                    as="select"
+                    custom
+                    name="number"
+                    style={{ width: 250 }}
+                  >
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -108,6 +89,32 @@ export const RecipeSubmit = () => {
                   </Form.Control>
                 </Form.Group>
                 <Form.Group>
+                  <Form.Label>Ingredients</Form.Label>
+
+                  {fields.map((_, i) => {
+                    return (
+                      <Form.Group key={i}>
+                        <Form.Control
+                          type="text"
+                          name={"ingredient" + i}
+                          style={{ width: 250 }}
+                          placeholder={
+                            i == 0 ? "1 cup all-purpose flour" : null
+                          }
+                        />
+                      </Form.Group>
+                    );
+                  })}
+                </Form.Group>
+                <Row
+                  className="add-ingredients"
+                  onClick={() => setFields(fields.concat(""))}
+                >
+                  <p className="add-ingredients">+ Add more ingredients</p>
+                </Row>
+              </Col>
+              <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
+                {/* <Form.Group>
                   <Form.Label>Directions</Form.Label>
                   <Form.Control
                     type="steps"
@@ -117,7 +124,7 @@ export const RecipeSubmit = () => {
                 </Form.Group>
                 <Form.Group> 
                   <Form.Control type="steps" as="textarea" placeholder="" />
-                </Form.Group>
+                </Form.Group> */}
                 <Button
                   style={{ backgroundColor: "#e40754", border: "none" }}
                   color="#e40754"
