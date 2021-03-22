@@ -24,13 +24,11 @@ body {
 .recipe-list-img {
   width: 100%;
 }
-.add-ingredients{
+.add-field{
   font-size: 14px;
-  justify-content: flex-end;
+  text-align: right;
   &:hover{
-    p{
-      cursor: pointer;
-      color: #e40754;
-    }
+    cursor: pointer;
+    color: #e40754;
   }
 }
