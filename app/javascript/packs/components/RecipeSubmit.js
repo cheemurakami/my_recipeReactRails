@@ -10,23 +10,21 @@ export const RecipeSubmit = () => {
 
     const formObject = Object.fromEntries(new FormData(e.target));
     const formArr = Object.entries(formObject);
-    const ingredientsArr = formArr.filter((pair) =>
-      pair[0].includes("ingredient")
+    const ingredientsAttributes = filteredArr(formArr, "ingredient").map(
+      (ingredient) => {
+        return {
+          ingredients: ingredient[1],
+        };
+      }
     );
-    const ingredientsAttributes = ingredientsArr.map((ingredient) => {
-      return {
-        ingredients: ingredient[1],
-      };
-    });
-    const directionsArr = formArr.filter((pair) =>
-      pair[0].includes("description")
+    const directionsAttributes = filteredArr(formArr, "description").map(
+      (description, i) => {
+        return {
+          index: i + 1,
+          description: description[1],
+        };
+      }
     );
-    const directionsAttributes = directionsArr.map((description, i) => {
-      return {
-        index: i + 1,
-        description: description[1],
-      };
-    });
     const recipeData = {
       recipe: {
         name: formObject.title,
@@ -46,6 +44,10 @@ export const RecipeSubmit = () => {
     }).then((resp) => console.log(resp));
   };
 
+  const filteredArr = (formArr, tableName) => {
+    return formArr.filter((pair) => pair[0].includes(tableName));
+  };
+  
   return (
     <Container>
       <Row className="mt-5">
@@ -124,19 +126,19 @@ export const RecipeSubmit = () => {
                 <Form.Label>Directions</Form.Label>
                 {directionFields.map((_, i) => {
                   return (
-                      <Form.Group key={i}>
-                        <span>{i + 1}.</span>
-                        <Form.Control
-                          type="steps"
-                          as="textarea"
-                          placeholder={
-                            i == 0
-                              ? "Cut each eggplant into about ½-inch (1-cm) thick round slices."
-                              : null
-                          }
-                          name={"description" + i}
-                        />
-                      </Form.Group>
+                    <Form.Group key={i}>
+                      <span>{i + 1}.</span>
+                      <Form.Control
+                        type="steps"
+                        as="textarea"
+                        placeholder={
+                          i == 0
+                            ? "Cut each eggplant into about ½-inch (1-cm) thick round slices."
+                            : null
+                        }
+                        name={"description" + i}
+                      />
+                    </Form.Group>
                   );
                 })}
 
