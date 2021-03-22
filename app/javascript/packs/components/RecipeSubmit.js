@@ -17,13 +17,24 @@ export const RecipeSubmit = () => {
         ingredients: ingredient[1],
       };
     });
+    const directionsArr = formArr.filter((pair) =>
+      pair[0].includes("description")
+    );
+    const directionsAttributes = directionsArr.map((description, i) => {
+      return {
+        index: i + 1,
+        description: description[1],
+      };
+    });
     const recipeData = {
       recipe: {
         name: formObject.title,
         number: formObject.number,
         ingredients_attributes: ingredientsAttributes,
+        directions_attributes: directionsAttributes,
       },
     };
+
     fetch("/api/recipes", {
       method: "POST",
       headers: {
@@ -114,17 +125,23 @@ export const RecipeSubmit = () => {
                 </Row>
               </Col>
               <Col lg={6} md={6} sm={12} xs={12} className="pl-5">
-                {/* <Form.Group>
+                <Form.Group>
                   <Form.Label>Directions</Form.Label>
                   <Form.Control
                     type="steps"
                     as="textarea"
                     placeholder="Cut each eggplant into about ½-inch (1-cm) thick round slices."
+                    name="description1"
                   />
                 </Form.Group>
-                <Form.Group> 
-                  <Form.Control type="steps" as="textarea" placeholder="" />
-                </Form.Group> */}
+                <Form.Group>
+                  <Form.Control
+                    type="steps"
+                    as="textarea"
+                    placeholder=""
+                    name="description2"
+                  />
+                </Form.Group>
                 <Button
                   style={{ backgroundColor: "#e40754", border: "none" }}
                   color="#e40754"
