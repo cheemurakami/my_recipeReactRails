@@ -15,6 +15,18 @@ export const Recipe = (props) => {
     return () => {};
   }, []);
 
+  const showIngredients = (ingredients) => {
+    console.log(ingredients);
+    return (
+      <>
+        <ul>
+          {ingredients.map((el) => {
+            return <li key={el.id}>{el.ingredients}</li>;
+          })}
+        </ul>
+      </>
+    );
+  };
   return (
     <Container>
       <Row>
@@ -22,7 +34,11 @@ export const Recipe = (props) => {
       </Row>
       <Row>
         <Col lg={4} md={6} sm={6} xs={12}>
-          <h4>Ingredients</h4>
+          <h2>Ingredients</h2>
+          <p className="servings">for {recipe.number} servings</p>
+          {recipe.ingredients && recipe.ingredients.length > 0
+            ? showIngredients(recipe.ingredients)
+            : null}
         </Col>
         <Col lg={8} md={6} sm={6} xs={12}>
           <h4>Preparation</h4>

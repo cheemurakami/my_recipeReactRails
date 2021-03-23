@@ -6,7 +6,8 @@ class Api::RecipesController < ApplicationController
 
   def show
     recipe = Recipe.find(params[:id])
-    json_response(recipe)
+    recipe_hash = {"name" => recipe.name, "servings" => recipe.number, "ingredients" => recipe.ingredients}
+    json_response(recipe_hash)
   end
 
   def create
