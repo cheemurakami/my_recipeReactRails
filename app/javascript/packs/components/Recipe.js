@@ -16,17 +16,39 @@ export const Recipe = (props) => {
   }, []);
 
   const showIngredients = (ingredients) => {
-    console.log(ingredients);
     return (
       <>
         <ul>
           {ingredients.map((el) => {
-            return <li key={el.id}>{el.ingredients}</li>;
+            return (
+              <li key={el.id}>
+                <p>{el.ingredients}</p>
+              </li>
+            );
           })}
         </ul>
       </>
     );
   };
+
+  const showDirections = (directions) => {
+    return (
+      <>
+        <ul>
+          {directions.map((el) => {
+            return (
+              <li key={el.id}>
+                <p>
+                  {el.index}. {el.description}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </>
+    );
+  };
+
   return (
     <Container>
       <Row>
@@ -35,13 +57,18 @@ export const Recipe = (props) => {
       <Row>
         <Col lg={4} md={6} sm={6} xs={12}>
           <h2>Ingredients</h2>
-          <p className="servings">for {recipe.number} servings</p>
+          {recipe.number ? (
+            <p className="servings">for {recipe.number} servings</p>
+          ) : null}
           {recipe.ingredients && recipe.ingredients.length > 0
             ? showIngredients(recipe.ingredients)
             : null}
         </Col>
         <Col lg={8} md={6} sm={6} xs={12}>
-          <h4>Preparation</h4>
+          <h2>Preparation</h2>
+          {recipe.directions && recipe.directions.length > 0
+            ? showDirections(recipe.directions)
+            : null}
         </Col>
       </Row>
       <Row>
