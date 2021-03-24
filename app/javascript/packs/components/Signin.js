@@ -3,12 +3,28 @@ import { connect } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
 
 export const Signin = (props) => {
+  
+  const signinSubmission = (e) => {
+    e.preventDefault();
+    
+    const signinData = { email: e.target.email.value, password: e.target.password.value };
+
+    fetch("/users/sign_in", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ user: signinData }),
+    }).then((resp) => console.log(resp));
+  };
+
   return (
     <Container>
-      <Form>
+      <Form onSubmit={signinSubmission}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control type="email" placeholder="Enter email" name="email" />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -16,11 +32,15 @@ export const Signin = (props) => {
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            name="password"
+          />
         </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
+        {/* <Form.Group controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+        </Form.Group> */}
         <Button
           style={{
             backgroundColor: "#e40754",
@@ -37,6 +57,4 @@ export const Signin = (props) => {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signin);
+export default connect(mapStateToProps)(Signin);

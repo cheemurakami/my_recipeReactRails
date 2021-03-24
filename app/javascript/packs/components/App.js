@@ -10,6 +10,7 @@ import RecipeSubmit from "./RecipeSubmit";
 import { store } from "../rdx/stores";
 
 export const App = () => {
+
   return (
     <Provider store={store}>
       <Router>
