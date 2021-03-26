@@ -6,3 +6,9 @@ export const loadedRecipes = (recipes) => {
     recipes,
   };
 };
+export const signedinUser = (userInfo) => {
+  return {
+    type: c.SIGNED_IN_USER,
+    userInfo,
+  };
+};

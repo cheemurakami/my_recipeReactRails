@@ -1,44 +1,44 @@
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import * as a from "../rdx/actions";
+import { connect } from "react-redux";
 
-import { Provider } from "react-redux";
 import React, { useEffect } from "react";
 import Recipe from "./Recipe";
 import RecipesList from "./RecipesList";
 import NavBar from "./NavBar";
 import Signin from "./Signin";
 import RecipeSubmit from "./RecipeSubmit";
-import { store } from "../rdx/stores";
 
-export const App = () => {
+export const App = ({ dispatch }) => {
   useEffect(() => {
     fetch("/signed_in")
       .then((resp) => resp.json())
-      .then((resp) => console.log(resp));
+      .then((resp) => {
+        dispatch(a.signedinUser(resp.user));
+      });
     return () => {};
   }, []);
-  
-  return (
-    <Provider store={store}>
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route path="/recipe/:id">
-            <Recipe />
-          </Route>
-          <Route path="/submit">
-            <RecipeSubmit />
-          </Route>
-          <Route path="/user_signin">
-            <Signin />
-          </Route>
 
-          <Route path="/">
-            <RecipesList />
-          </Route>
-        </Switch>
-      </Router>
-    </Provider>
+  return (
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path="/recipe/:id">
+          <Recipe />
+        </Route>
+        <Route path="/submit">
+          <RecipeSubmit />
+        </Route>
+        <Route path="/user_signin">
+          <Signin />
+        </Route>
+
+        <Route path="/">
+          <RecipesList />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
-export default App;
+export default connect()(App);

@@ -1,11 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 
-export const NavBar = (props) => {
+export const NavBar = ({ currentUser }) => {
   return (
     <>
-      <Navbar style={{backgroundColor: "#79dcf1"}} expand="lg">
+      <Navbar style={{ backgroundColor: "#79dcf1" }} expand="lg">
         <Navbar.Brand href="/">Logo</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -34,8 +41,11 @@ export const NavBar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+  console.log(state.userReducer.user);
+  return {
+    currentUser: state.userReducer.user,
+  };
+};
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps)(NavBar);
