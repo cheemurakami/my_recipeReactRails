@@ -18,7 +18,7 @@ export const NavBar = ({ currentUser }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="/user_signin">Sign in</Nav.Link>
+
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -31,9 +31,18 @@ export const NavBar = ({ currentUser }) => {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          {currentUser && currentUser.email ? (
+            <Nav.Link eventKey="disabled" disabled>
+              {currentUser.email}
+            </Nav.Link>
+          ) : (
+            <Nav.Link href="/user_signin">Sign in</Nav.Link>
+          )}
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success" style={{ color: "#fff" }}>
+              Search
+            </Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
@@ -42,7 +51,6 @@ export const NavBar = ({ currentUser }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.userReducer.user);
   return {
     currentUser: state.userReducer.user,
   };

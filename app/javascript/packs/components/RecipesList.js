@@ -52,7 +52,6 @@ export const RecipesList = ({ dispatch, recipes }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.recipesReducer.recipes);
   return {
     recipes: state.recipesReducer.recipes,
   };
