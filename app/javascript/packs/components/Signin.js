@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
+import * as a from "../rdx/actions";
 
-export const Signin = (props) => {
-  
+export const Signin = ({ dispatch }) => {
   const signinSubmission = (e) => {
     e.preventDefault();
-    
-    const signinData = { email: e.target.email.value, password: e.target.password.value };
+
+    const signinData = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
 
     fetch("/users/sign_in", {
       method: "POST",
@@ -16,7 +19,9 @@ export const Signin = (props) => {
         Accept: "application/json",
       },
       body: JSON.stringify({ user: signinData }),
-    }).then((resp) => console.log(resp));
+    }).then((resp) => {
+      dispatch(a.signedinUser(resp.user));
+    });
   };
 
   return (
@@ -55,6 +60,4 @@ export const Signin = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps)(Signin);
+export default connect()(Signin);
