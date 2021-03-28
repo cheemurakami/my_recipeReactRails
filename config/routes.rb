@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
+  
+  devise_scope :user do
+    get "/signed_in" => "sessions#signed_in"
+  end
   namespace :api do
     resources :recipes do
       resources :ingredients
