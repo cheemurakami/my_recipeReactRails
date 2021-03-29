@@ -12,3 +12,8 @@ export const signedinUser = (userInfo) => {
     userInfo,
   };
 };
+export const signedOut = () => {
+  return {
+    type: c.SIGNED_OUT,
+  };
+};

@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as a from "../rdx/actions";
+import { Redirect } from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -9,7 +11,13 @@ import {
   Button,
 } from "react-bootstrap";
 
-export const NavBar = ({ currentUser }) => {
+export const NavBar = ({ currentUser, dispatch }) => {
+  const logout = () => {
+    fetch("/users/sign_out", {
+      method: "DELETE",
+    }).then(() => dispatch(a.signedOut()));
+  };
+
   return (
     <>
       <Navbar style={{ backgroundColor: "#79dcf1" }} expand="lg">
@@ -26,9 +34,15 @@ export const NavBar = ({ currentUser }) => {
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              {currentUser && currentUser.email ? (
+                <NavDropdown.Item onClick={() => logout()}>
+                  Log out
+                </NavDropdown.Item>
+              ) : (
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+                </NavDropdown.Item>
+              )}
             </NavDropdown>
           </Nav>
           {currentUser && currentUser.email ? (

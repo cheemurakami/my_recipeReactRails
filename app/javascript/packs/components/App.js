@@ -15,7 +15,11 @@ export const App = ({ dispatch }) => {
     fetch("/signed_in")
       .then((resp) => resp.json())
       .then((resp) => {
-        dispatch(a.signedinUser(resp.user));
+        if (resp.user == null) {
+          return null;
+        } else {
+          return dispatch(a.signedinUser(resp.user));
+        }
       });
     return () => {};
   }, []);
