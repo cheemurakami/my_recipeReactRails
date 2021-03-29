@@ -7,6 +7,7 @@ import Recipe from "./Recipe";
 import RecipesList from "./RecipesList";
 import NavBar from "./NavBar";
 import Signin from "./Signin";
+import MyPage from "./MyPage";
 import RecipeSubmit from "./RecipeSubmit";
 
 export const App = ({ dispatch }) => {
@@ -31,6 +32,9 @@ export const App = ({ dispatch }) => {
         </Route>
         <Route path="/user_signin">
           <Signin />
+        </Route>
+        <Route path="/my_page">
+          <MyPage />
         </Route>
 
         <Route path="/">

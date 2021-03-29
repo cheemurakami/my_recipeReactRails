@@ -32,11 +32,13 @@ export const NavBar = ({ currentUser }) => {
             </NavDropdown>
           </Nav>
           {currentUser && currentUser.email ? (
-            <Nav.Link eventKey="disabled" disabled>
+            <Nav.Link className="nav-content" href="/my_page">
               {currentUser.email}
             </Nav.Link>
           ) : (
-            <Nav.Link href="/user_signin">Sign in</Nav.Link>
+            <Nav.Link className="nav-content" href="/user_signin">
+              Sign in
+            </Nav.Link>
           )}
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
