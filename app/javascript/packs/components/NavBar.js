@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as a from "../rdx/actions";
-import { Redirect } from "react-router-dom";
 import {
   Navbar,
   Nav,

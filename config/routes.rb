@@ -4,11 +4,15 @@ Rails.application.routes.draw do
   devise_scope :user do
     get "/signed_in" => "sessions#signed_in"
   end
+
   namespace :api do
     resources :recipes do
       resources :ingredients
     end
   end
+
+  get "api/user_recipes" => "api/recipes#user_recipes"
+
   root 'homepage#index'
 
   # IMPORTANT #
