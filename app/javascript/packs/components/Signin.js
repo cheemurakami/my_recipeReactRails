@@ -8,12 +8,10 @@ import { Link } from "react-router-dom";
 export const Signin = ({ dispatch, currentUser }) => {
   const signinSubmission = (e) => {
     e.preventDefault();
-
     const signinData = {
       email: e.target.email.value,
       password: e.target.password.value,
     };
-
     fetch("/users/sign_in", {
       method: "POST",
       headers: {
