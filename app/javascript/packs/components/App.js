@@ -7,6 +7,7 @@ import Recipe from "./Recipe";
 import RecipesList from "./RecipesList";
 import NavBar from "./NavBar";
 import Signin from "./Signin";
+import MyPage from "./MyPage";
 import RecipeSubmit from "./RecipeSubmit";
 
 export const App = ({ dispatch }) => {
@@ -14,7 +15,11 @@ export const App = ({ dispatch }) => {
     fetch("/signed_in")
       .then((resp) => resp.json())
       .then((resp) => {
-        dispatch(a.signedinUser(resp.user));
+        if (resp.user == null) {
+          return null;
+        } else {
+          return dispatch(a.signedinUser(resp.user));
+        }
       });
     return () => {};
   }, []);
@@ -31,6 +36,9 @@ export const App = ({ dispatch }) => {
         </Route>
         <Route path="/user_signin">
           <Signin />
+        </Route>
+        <Route path="/my_page">
+          <MyPage />
         </Route>
 
         <Route path="/">

@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
 import * as a from "../rdx/actions";
+import { Redirect } from "react-router-dom";
 
-export const Signin = ({ dispatch }) => {
+export const Signin = ({ dispatch, currentUser }) => {
   const signinSubmission = (e) => {
     e.preventDefault();
 
@@ -19,13 +20,22 @@ export const Signin = ({ dispatch }) => {
         Accept: "application/json",
       },
       body: JSON.stringify({ user: signinData }),
-    }).then((resp) => {
-      dispatch(a.signedinUser(resp.user));
-    });
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        dispatch(a.signedinUser(resp));
+      });
+  };
+
+  const directToHome = () => {
+    if (currentUser) {
+      return <Redirect to="/" />;
+    }
   };
 
   return (
     <Container>
+      {directToHome()}
       <Form onSubmit={signinSubmission}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -60,4 +70,9 @@ export const Signin = ({ dispatch }) => {
   );
 };
 
-export default connect()(Signin);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.user,
+  };
+};
+export default connect(mapStateToProps)(Signin);

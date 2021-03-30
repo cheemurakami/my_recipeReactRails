@@ -1,4 +1,6 @@
 class Api::RecipesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     recipes = Recipe.all
     json_response(recipes)
@@ -13,6 +15,13 @@ class Api::RecipesController < ApplicationController
   def create
     recipe = Recipe.create(recipe_params)
     json_response(recipe)
+  end
+
+  def user_recipes
+    if current_user
+      recipes = current_user.recipes
+      json_response(recipes)
+    end
   end
 
   private
