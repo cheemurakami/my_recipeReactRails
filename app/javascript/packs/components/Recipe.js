@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
-export const Recipe = (props) => {
+export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   useEffect(() => {
@@ -49,6 +49,22 @@ export const Recipe = (props) => {
     );
   };
 
+  const submitOrSignin = () => {
+    if (currentUser) {
+      return (
+        <Link to="/submit" style={{ color: "#e40754" }}>
+          Submit your recipe here.
+        </Link>
+      );
+    } else {
+      return (
+        <Link to="/user_signin" style={{ color: "#e40754" }}>
+          Submit your recipe here.
+        </Link>
+      );
+    }
+  };
+
   return (
     <Container>
       <Row>
@@ -75,17 +91,16 @@ export const Recipe = (props) => {
         <h4>Submit a recipe</h4>
       </Row>
       <Row>
-        <p>
-          Have a recipe of your own to share?{" "}
-          <Link to="/submit" style={{ color: "#e40754" }}>
-            Submit your recipe here.
-          </Link>
-        </p>
+        <p>Have a recipe of your own to share? {submitOrSignin()}</p>
       </Row>
     </Container>
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.user,
+  };
+};
 
 export default connect(mapStateToProps)(Recipe);
