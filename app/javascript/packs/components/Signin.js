@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
 import * as a from "../rdx/actions";
-import { Redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export const Signin = ({ dispatch, currentUser }) => {
   const signinSubmission = (e) => {

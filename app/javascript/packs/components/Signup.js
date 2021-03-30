@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import * as a from "../rdx/actions";
 
-export const Signup = () => {
+export const Signup = ({ currentUser, dispatch }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [errMessages, setErrMessages] = useState({});
 
@@ -26,16 +28,11 @@ export const Signup = () => {
         if (resp.errors) {
           setErrMessages(resp.errors);
           setShowAlert(true);
+        } else {
+          dispatch(a.signedinUser(resp));
+          return <Redirect to="/" />;
         }
       });
-  };
-
-  const capitalizeKey = (key) => {
-    if (key.includes("_")) {
-      const keyword = key.replace("_", " ");
-      return keyword.charAt(0).toUpperCase() + keyword.slice(1);
-    }
-    return key.charAt(0).toUpperCase() + key.slice(1);
   };
 
   const showErrMessages = () => {
@@ -51,8 +48,23 @@ export const Signup = () => {
     );
   };
 
+  const capitalizeKey = (key) => {
+    if (key.includes("_")) {
+      const keyword = key.replace("_", " ");
+      return keyword.charAt(0).toUpperCase() + keyword.slice(1);
+    }
+    return key.charAt(0).toUpperCase() + key.slice(1);
+  };
+
+  const directToHome = () => {
+    if (currentUser) {
+      return <Redirect to="/" />;
+    }
+  };
+
   return (
-  <Container className="mt-5">
+    <Container className="mt-5">
+      {directToHome()}
       {showAlert ? showErrMessages() : null}
       <Form onSubmit={signupSubmission}>
         <Form.Group controlId="formBasicEmail">
@@ -93,4 +105,9 @@ export const Signup = () => {
   );
 };
 
-export default connect()(Signup);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.user,
+  };
+};
+export default connect(mapStateToProps)(Signup);
