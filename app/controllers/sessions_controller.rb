@@ -4,6 +4,10 @@ class SessionsController < Devise::SessionsController
       render json: {
         user: current_user
       }
+    else
+      render json: {
+        user: nil
+      } 
     end
   end
 end
