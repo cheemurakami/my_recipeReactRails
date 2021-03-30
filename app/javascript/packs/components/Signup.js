@@ -1,43 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
-import * as a from "../rdx/actions";
-import { Redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-export const Signin = ({ dispatch, currentUser }) => {
-  const signinSubmission = (e) => {
+export const Signup = (props) => {
+  const signupSubmission = (e) => {
     e.preventDefault();
 
-    const signinData = {
+    const signupData = {
       email: e.target.email.value,
       password: e.target.password.value,
+      password_confirmation: e.target.password_confirmation.value,
     };
 
-    fetch("/users/sign_in", {
+    fetch("/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({ user: signinData }),
+      body: JSON.stringify({ user: signupData }),
     })
       .then((resp) => resp.json())
       .then((resp) => {
-        dispatch(a.signedinUser(resp));
+        console.log(resp);
       });
-  };
-
-  const directToHome = () => {
-    if (currentUser) {
-      return <Redirect to="/" />;
-    }
   };
 
   return (
     <Container className="mt-5">
-      {directToHome()}
-      <Form onSubmit={signinSubmission}>
+      <Form onSubmit={signupSubmission}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" name="email" />
@@ -54,9 +45,14 @@ export const Signin = ({ dispatch, currentUser }) => {
             name="password"
           />
         </Form.Group>
-        {/* <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group> */}
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            name="password_confirmation"
+          />
+        </Form.Group>
         <Button
           style={{
             backgroundColor: "#e40754",
@@ -64,29 +60,11 @@ export const Signin = ({ dispatch, currentUser }) => {
           }}
           type="submit"
         >
-          Sign in
+          Sign up
         </Button>
       </Form>
-      <div className="mt-3">
-        <p>Don't have an account?</p>
-        <Link to="/user_signup">
-          <Button
-            style={{
-              backgroundColor: "#e40754",
-              border: "none",
-            }}
-          >
-            Create Account
-          </Button>
-        </Link>
-      </div>
     </Container>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.userReducer.user,
-  };
-};
-export default connect(mapStateToProps)(Signin);
+export default connect()(Signup);
