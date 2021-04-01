@@ -2,17 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
 import * as a from "../rdx/actions";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export const Signin = ({ dispatch, currentUser }) => {
   const signinSubmission = (e) => {
     e.preventDefault();
-
     const signinData = {
       email: e.target.email.value,
       password: e.target.password.value,
     };
-
     fetch("/users/sign_in", {
       method: "POST",
       headers: {
@@ -34,7 +32,7 @@ export const Signin = ({ dispatch, currentUser }) => {
   };
 
   return (
-    <Container>
+    <Container className="mt-5">
       {directToHome()}
       <Form onSubmit={signinSubmission}>
         <Form.Group controlId="formBasicEmail">
@@ -66,6 +64,19 @@ export const Signin = ({ dispatch, currentUser }) => {
           Sign in
         </Button>
       </Form>
+      <div className="mt-3">
+        <p>Don't have an account?</p>
+        <Link to="/user_signup">
+          <Button
+            style={{
+              backgroundColor: "#e40754",
+              border: "none",
+            }}
+          >
+            Create Account
+          </Button>
+        </Link>
+      </div>
     </Container>
   );
 };
