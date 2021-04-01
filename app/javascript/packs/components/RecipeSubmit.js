@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
-export const RecipeSubmit = () => {
+export const RecipeSubmit = ({ currentUser }) => {
   const [fields, setFields] = useState([""]);
   const [directionFields, setDirectionFields] = useState([""]);
 
   const submissionHandler = (e) => {
     e.preventDefault();
-
     const formObject = Object.fromEntries(new FormData(e.target));
     const formArr = Object.entries(formObject);
     const ingredientsAttributes = filteredArr(formArr, "ingredient").map(
@@ -29,6 +29,7 @@ export const RecipeSubmit = () => {
       recipe: {
         name: formObject.title,
         number: formObject.number,
+        user_id: currentUser.id,
         ingredients_attributes: ingredientsAttributes,
         directions_attributes: directionsAttributes,
       },
@@ -47,7 +48,7 @@ export const RecipeSubmit = () => {
   const filteredArr = (formArr, tableName) => {
     return formArr.filter((pair) => pair[0].includes(tableName));
   };
-  
+
   return (
     <Container>
       <Row className="mt-5">
@@ -170,4 +171,9 @@ export const RecipeSubmit = () => {
   );
 };
 
-export default RecipeSubmit;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.user,
+  };
+};
+export default connect(mapStateToProps)(RecipeSubmit);
