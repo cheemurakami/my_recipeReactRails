@@ -49,10 +49,13 @@ li {
   color: inherit;
 }
 .tip-link {
-  font-size: 14px;
+  font-size: 0.85rem;
   color: #e40754;
   &:hover{
     cursor: pointer;
     color: #602035;
   } 
+}
+.icon-tip{
+  margin-right: 8px;
 }

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { FaRegThumbsUp } from "react-icons/fa";
+import { FaRegCommentAlt } from "react-icons/fa";
 
 export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
@@ -69,10 +71,14 @@ export const Recipe = ({ currentUser }) => {
     <Container>
       <Row className="tip-link mt-5">
         <span>
-          <p>39 TIPS</p>{" "}
+          <span class="icon-tip">
+            <FaRegCommentAlt />
+          </span>
+          <span class="icon-tip">39 TIPS</span>
         </span>
-        <span>
-          <p>96% WOULD MAKE AGAIN</p>
+        <span class="icon-tip">
+          <FaRegThumbsUp />
+          <span class="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
       </Row>
       <Row>
