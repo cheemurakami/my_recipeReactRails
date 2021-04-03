@@ -67,6 +67,14 @@ export const Recipe = ({ currentUser }) => {
 
   return (
     <Container>
+      <Row className="tip-link mt-5">
+        <span>
+          <p>39 TIPS</p>{" "}
+        </span>
+        <span>
+          <p>96% WOULD MAKE AGAIN</p>
+        </span>
+      </Row>
       <Row>
         <h1>{recipe.name}</h1>
       </Row>
