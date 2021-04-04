@@ -85,7 +85,9 @@ export const Recipe = ({ currentUser }) => {
         </span>
       </Row>
       <Row>
-        <h1>{recipe.name}</h1>
+        <h1>{recipe.name}</h1><span className="icon-btn like-logo">
+          <FaRegThumbsUp className="icon-letter" />
+        </span>
       </Row>
       <Row className="mt-5 mb-3">
         <span className="icon-btn pinterest-logo">
