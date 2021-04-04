@@ -6,6 +6,9 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { ImPinterest2 } from "react-icons/im";
+import { AiOutlineFacebook } from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
 
 export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
@@ -83,6 +86,17 @@ export const Recipe = ({ currentUser }) => {
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
+      </Row>
+      <Row className="mt-5 mb-3">
+        <span className="icon-btn pinterest-logo">
+          <ImPinterest2 className="icon-letter" />
+        </span>
+        <span className="icon-btn facebook-logo">
+          <AiOutlineFacebook className="icon-letter" />
+        </span>
+        <span className="icon-btn email-logo">
+          <AiOutlineMail className="icon-letter" />
+        </span>
       </Row>
       <Row>
         <Col lg={4} md={6} sm={6} xs={12}>
