@@ -70,22 +70,27 @@ export const Recipe = ({ currentUser }) => {
     }
   };
 
+  const likeRecipe = () => {
+    console.log(id, currentUser.id);
+  };
+
   return (
     <Container>
       <Row className="tip-link mt-5">
         <span>
-          <span class="icon-tip">
+          <span className="icon-tip">
             <FaRegCommentAlt />
           </span>
-          <span class="icon-tip">39 TIPS</span>
+          <span className="icon-tip">39 TIPS</span>
         </span>
-        <span class="icon-tip">
+        <span className="icon-tip">
           <FaRegThumbsUp />
-          <span class="icon-tip"> 96% WOULD MAKE AGAIN</span>
+          <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
       </Row>
       <Row>
-        <h1>{recipe.name}</h1><span className="icon-btn like-logo">
+        <h1>{recipe.name}</h1>
+        <span onClick={() => likeRecipe()} className="icon-btn like-logo">
           <FaRegThumbsUp className="icon-letter" />
         </span>
       </Row>
