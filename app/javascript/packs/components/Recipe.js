@@ -4,11 +4,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { FaRegThumbsUp } from "react-icons/fa";
-import { FaRegCommentAlt } from "react-icons/fa";
+import { FaRegThumbsUp, FaRegCommentAlt } from "react-icons/fa";
 import { ImPinterest2 } from "react-icons/im";
-import { AiOutlineFacebook } from "react-icons/ai";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
 
 export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
@@ -71,7 +69,18 @@ export const Recipe = ({ currentUser }) => {
   };
 
   const likeRecipe = () => {
-    console.log(id, currentUser.id);
+    const likeData = {
+      user_id: currentUser.id,
+      recipe_id: id,
+    };
+    fetch("/api/likes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(likeData),
+    }).then((resp) => console.log(resp));
   };
 
   return (
