@@ -9,9 +9,11 @@ Rails.application.routes.draw do
     resources :recipes do
       resources :ingredients
     end
+    resources :likes, only: [:create, :destroy]
   end
 
   get "api/user_recipes" => "api/recipes#user_recipes"
+  get "api/recipe_likes/:id" => "api/recipes#recipe_likes"
 
   root 'homepage#index'
 

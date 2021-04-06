@@ -24,7 +24,7 @@ body {
 .recipe-list-img {
   width: 100%;
 }
-.add-field{
+.add-field {
   font-size: 14px;
   text-align: right;
   &:hover{
@@ -47,4 +47,40 @@ li {
 }
 .nav-content:hover{
   color: inherit;
+}
+.tip-link {
+  font-size: 0.85rem;
+  color: #e40754;
+  &:hover{
+    cursor: pointer;
+    color: #602035;
+  } 
+}
+.icon-tip{
+  margin-right: 8px;
+}
+.icon-btn{
+  margin: 4px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  &:hover{
+    cursor: pointer;
+  } 
+}
+.pinterest-logo{
+  background-color: #e60019;
+}
+.facebook-logo{
+  background-color: #3b5998;
+}
+.email-logo{
+  background-color: #8247b1;
+}
+.like-logo{
+  background-color: #e40754;
+}
+.icon-letter{
+  color: #fff;
+  margin: 10px;
 }
