@@ -11,10 +11,20 @@ import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
 export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
+  const [likes, setLikes] = useState();
   useEffect(() => {
     fetch(`/api/recipes/${id}`)
       .then((resp) => resp.json())
       .then((resp) => setRecipe(resp));
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/recipe_likes/${id}`)
+      .then((resp) => (resp.status == 200 ? resp.json() : null))
+      .then((resp) => {
+        setLikes(resp);
+      });
     return () => {};
   }, []);
 
@@ -96,6 +106,12 @@ export const Recipe = ({ currentUser }) => {
           <FaRegThumbsUp />
           <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
+        {likes > 0 ? (
+          <span className="icon-tip">
+            <FaRegThumbsUp />
+            <span className="icon-tip"> {likes} LIKES</span>
+          </span>
+        ) : null}
       </Row>
       <Row>
         <h1>{recipe.name}</h1>

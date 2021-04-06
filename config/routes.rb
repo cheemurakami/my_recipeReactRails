@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   get "api/user_recipes" => "api/recipes#user_recipes"
+  get "api/recipe_likes/:id" => "api/recipes#recipe_likes"
 
   root 'homepage#index'
 

@@ -24,6 +24,14 @@ class Api::RecipesController < ApplicationController
     end
   end
 
+  def recipe_likes
+    recipe = Recipe.find(params[:id])
+    likes = recipe.likes.length
+    if likes > 0
+      json_response(likes)
+    end
+  end
+
   private
   def recipe_params
     params.require(:recipe).permit(:name, :number, :user_id,ingredients_attributes: [:ingredients], directions_attributes: [:index, :description])
