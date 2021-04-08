@@ -83,6 +83,31 @@ export const Recipe = ({ currentUser }) => {
     }
   };
 
+  const showThumbsIcons = () => {
+    if (likes && currentUser) {
+      const userLiked = likes.find((key) => key.user_id == currentUser.id);
+      if (userLiked) {
+        return (
+          <span onClick={() => unlikeRecipe()} className="icon-btn unlike-logo">
+            <FaRegThumbsDown className="icon-letter" />
+          </span>
+        );
+      } else {
+        return showThumsUpIcon();
+      }
+    } else {
+      return showThumsUpIcon();
+    }
+  };
+
+  const showThumsUpIcon = () => {
+    return (
+      <span onClick={() => likeRecipe()} className="icon-btn like-logo">
+        <FaRegThumbsUp className="icon-letter" />
+      </span>
+    );
+  };
+
   const likeRecipe = () => {
     const likeData = {
       user_id: currentUser.id,
@@ -128,12 +153,7 @@ export const Recipe = ({ currentUser }) => {
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
-        <span onClick={() => likeRecipe()} className="icon-btn like-logo">
-          <FaRegThumbsUp className="icon-letter" />
-        </span>
-        <span onClick={() => unlikeRecipe()} className="icon-btn unlike-logo">
-          <FaRegThumbsDown className="icon-letter" />
-        </span>
+        {showThumbsIcons()}
       </Row>
       <Row className="mt-5 mb-3">
         <span className="icon-btn pinterest-logo">
