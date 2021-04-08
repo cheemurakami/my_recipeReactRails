@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { FaRegThumbsUp, FaRegCommentAlt } from "react-icons/fa";
+import { FaRegThumbsUp, FaRegThumbsDown, FaRegCommentAlt } from "react-icons/fa";
 import { ImPinterest2 } from "react-icons/im";
 import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
 
@@ -12,6 +12,7 @@ export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [likes, setLikes] = useState();
+
   useEffect(() => {
     fetch(`/api/recipes/${id}`)
       .then((resp) => resp.json())
@@ -106,17 +107,24 @@ export const Recipe = ({ currentUser }) => {
           <FaRegThumbsUp />
           <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
+
+        
         {likes > 0 ? (
           <span className="icon-tip">
             <FaRegThumbsUp />
             <span className="icon-tip"> {likes} LIKES</span>
           </span>
         ) : null}
+
+
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
         <span onClick={() => likeRecipe()} className="icon-btn like-logo">
           <FaRegThumbsUp className="icon-letter" />
+        </span>
+        <span className="icon-btn unlike-logo">
+          <FaRegThumbsDown className="icon-letter" />
         </span>
       </Row>
       <Row className="mt-5 mb-3">
