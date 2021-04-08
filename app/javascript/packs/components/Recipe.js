@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { FaRegThumbsUp, FaRegCommentAlt } from "react-icons/fa";
+import {
+  FaRegThumbsUp,
+  FaRegThumbsDown,
+  FaRegCommentAlt,
+} from "react-icons/fa";
 import { ImPinterest2 } from "react-icons/im";
 import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
 
@@ -12,6 +16,7 @@ export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
   const [likes, setLikes] = useState();
+
   useEffect(() => {
     fetch(`/api/recipes/${id}`)
       .then((resp) => resp.json())
@@ -78,6 +83,31 @@ export const Recipe = ({ currentUser }) => {
     }
   };
 
+  const showThumbsIcons = () => {
+    if (likes && currentUser) {
+      const userLiked = likes.find((key) => key.user_id == currentUser.id);
+      if (userLiked) {
+        return (
+          <span onClick={() => unlikeRecipe()} className="icon-btn unlike-logo">
+            <FaRegThumbsDown className="icon-letter" />
+          </span>
+        );
+      } else {
+        return showThumsUpIcon();
+      }
+    } else {
+      return showThumsUpIcon();
+    }
+  };
+
+  const showThumsUpIcon = () => {
+    return (
+      <span onClick={() => likeRecipe()} className="icon-btn like-logo">
+        <FaRegThumbsUp className="icon-letter" />
+      </span>
+    );
+  };
+
   const likeRecipe = () => {
     const likeData = {
       user_id: currentUser.id,
@@ -90,6 +120,13 @@ export const Recipe = ({ currentUser }) => {
         Accept: "application/json",
       },
       body: JSON.stringify(likeData),
+    }).then((resp) => console.log(resp));
+  };
+
+  const unlikeRecipe = () => {
+    const likedId = likes.find((key) => key.user_id == currentUser.id).id;
+    fetch(`/api/likes/${likedId}`, {
+      method: "DELETE",
     }).then((resp) => console.log(resp));
   };
 
@@ -106,18 +143,17 @@ export const Recipe = ({ currentUser }) => {
           <FaRegThumbsUp />
           <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
-        {likes > 0 ? (
+
+        {likes ? (
           <span className="icon-tip">
             <FaRegThumbsUp />
-            <span className="icon-tip"> {likes} LIKES</span>
+            <span className="icon-tip"> {likes.length} LIKES</span>
           </span>
         ) : null}
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
-        <span onClick={() => likeRecipe()} className="icon-btn like-logo">
-          <FaRegThumbsUp className="icon-letter" />
-        </span>
+        {showThumbsIcons()}
       </Row>
       <Row className="mt-5 mb-3">
         <span className="icon-btn pinterest-logo">
