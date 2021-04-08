@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { FaRegThumbsUp, FaRegThumbsDown, FaRegCommentAlt } from "react-icons/fa";
+import {
+  FaRegThumbsUp,
+  FaRegThumbsDown,
+  FaRegCommentAlt,
+} from "react-icons/fa";
 import { ImPinterest2 } from "react-icons/im";
 import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
 
@@ -94,6 +98,13 @@ export const Recipe = ({ currentUser }) => {
     }).then((resp) => console.log(resp));
   };
 
+  const unlikeRecipe = () => {
+    const likedId = likes.find((key) => key.user_id == currentUser.id).id;
+    fetch(`/api/likes/${likedId}`, {
+      method: "DELETE",
+    }).then((resp) => console.log(resp));
+  };
+
   return (
     <Container>
       <Row className="tip-link mt-5">
@@ -108,22 +119,19 @@ export const Recipe = ({ currentUser }) => {
           <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
 
-        
-        {likes > 0 ? (
+        {likes ? (
           <span className="icon-tip">
             <FaRegThumbsUp />
-            <span className="icon-tip"> {likes} LIKES</span>
+            <span className="icon-tip"> {likes.length} LIKES</span>
           </span>
         ) : null}
-
-
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
         <span onClick={() => likeRecipe()} className="icon-btn like-logo">
           <FaRegThumbsUp className="icon-letter" />
         </span>
-        <span className="icon-btn unlike-logo">
+        <span onClick={() => unlikeRecipe()} className="icon-btn unlike-logo">
           <FaRegThumbsDown className="icon-letter" />
         </span>
       </Row>

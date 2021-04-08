@@ -26,8 +26,8 @@ class Api::RecipesController < ApplicationController
 
   def recipe_likes
     recipe = Recipe.find(params[:id])
-    likes = recipe.likes.length
-    if likes > 0
+    likes = recipe.likes
+    if likes.length > 0
       json_response(likes)
     end
   end
