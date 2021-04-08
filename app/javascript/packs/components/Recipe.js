@@ -35,35 +35,31 @@ export const Recipe = ({ currentUser }) => {
 
   const showIngredients = (ingredients) => {
     return (
-      <>
-        <ul>
-          {ingredients.map((el) => {
-            return (
-              <li key={el.id}>
-                <p>{el.ingredients}</p>
-              </li>
-            );
-          })}
-        </ul>
-      </>
+      <ul>
+        {ingredients.map((el) => {
+          return (
+            <li key={el.id}>
+              <p>{el.ingredients}</p>
+            </li>
+          );
+        })}
+      </ul>
     );
   };
 
   const showDirections = (directions) => {
     return (
-      <>
-        <ul>
-          {directions.map((el) => {
-            return (
-              <li key={el.id}>
-                <p>
-                  {el.index}. {el.description}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
-      </>
+      <ul>
+        {directions.map((el) => {
+          return (
+            <li key={el.id}>
+              <p>
+                {el.index}. {el.description}
+              </p>
+            </li>
+          );
+        })}
+      </ul>
     );
   };
 
@@ -84,23 +80,30 @@ export const Recipe = ({ currentUser }) => {
   };
 
   const showThumbsIcons = () => {
-    if (likes && currentUser) {
-      const userLiked = likes.find((key) => key.user_id == currentUser.id);
-      if (userLiked) {
-        return (
-          <span onClick={() => unlikeRecipe()} className="icon-btn unlike-logo">
-            <FaRegThumbsDown className="icon-letter" />
-          </span>
-        );
+    if (currentUser) {
+      if (likes) {
+        const userLiked = likes.find((key) => key.user_id == currentUser.id);
+        if (userLiked) {
+          return (
+            <span
+              onClick={() => unlikeRecipe()}
+              className="icon-btn unlike-logo"
+            >
+              <FaRegThumbsDown className="icon-letter" />
+            </span>
+          );
+        } else {
+          return showThumbsup();
+        }
       } else {
-        return showThumsUpIcon();
+        return showThumbsup();
       }
     } else {
-      return showThumsUpIcon();
+      return backToSignin();
     }
   };
 
-  const showThumsUpIcon = () => {
+  const showThumbsup = () => {
     return (
       <span onClick={() => likeRecipe()} className="icon-btn like-logo">
         <FaRegThumbsUp className="icon-letter" />
@@ -108,6 +111,16 @@ export const Recipe = ({ currentUser }) => {
     );
   };
 
+  const backToSignin = () => {
+    return (
+      <span className="icon-btn like-logo">
+        <Link to="/user_signin">
+          <FaRegThumbsUp className="icon-letter" />
+        </Link>
+      </span>
+    );
+  };
+  
   const likeRecipe = () => {
     const likeData = {
       user_id: currentUser.id,
