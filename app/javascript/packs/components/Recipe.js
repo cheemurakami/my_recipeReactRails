@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { ImPinterest2 } from "react-icons/im";
 import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
+import { Likes } from "./Likes.js";
 
 export const Recipe = ({ currentUser }) => {
   const { id } = useParams();
@@ -120,7 +121,7 @@ export const Recipe = ({ currentUser }) => {
       </span>
     );
   };
-  
+
   const likeRecipe = () => {
     const likeData = {
       user_id: currentUser.id,
@@ -157,12 +158,8 @@ export const Recipe = ({ currentUser }) => {
           <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
 
-        {likes ? (
-          <span className="icon-tip">
-            <FaRegThumbsUp />
-            <span className="icon-tip"> {likes.length} LIKES</span>
-          </span>
-        ) : null}
+        {likes ? <Likes likes={likes}/> : null}
+
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
