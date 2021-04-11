@@ -17,3 +17,9 @@ export const signedOut = () => {
     type: c.SIGNED_OUT,
   };
 };
+export const loadedLikes = (likes) => {
+  return {
+    type: c.LOADED_LIKES,
+    likes,
+  };
+};
