@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FaRegThumbsUp } from "react-icons/fa";
+
 export const Likes = ({ likes }) => {
   return (
     <span className="icon-tip">
@@ -10,6 +11,8 @@ export const Likes = ({ likes }) => {
   );
 };
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => {
+  return {};
+};
 
 export default connect(mapStateToProps)(Likes);

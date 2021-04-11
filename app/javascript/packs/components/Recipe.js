@@ -25,14 +25,17 @@ export const Recipe = ({ currentUser, dispatch, likes }) => {
   }, []);
 
   useEffect(() => {
+    loadLikes();
+    return () => {};
+  }, []);
+
+  const loadLikes = () => {
     fetch(`/api/recipe_likes/${id}`)
       .then((resp) => (resp.status == 200 ? resp.json() : null))
       .then((resp) => {
         dispatch(a.loadedLikes(resp));
       });
-    return () => {};
-  }, []);
-
+  };
   const showIngredients = (ingredients) => {
     return (
       <ul>
@@ -133,14 +136,14 @@ export const Recipe = ({ currentUser, dispatch, likes }) => {
         Accept: "application/json",
       },
       body: JSON.stringify(likeData),
-    }).then((resp) => console.log(resp));
+    }).then(() => loadLikes());
   };
 
   const unlikeRecipe = () => {
     const likedId = likes.find((key) => key.user_id == currentUser.id).id;
     fetch(`/api/likes/${likedId}`, {
       method: "DELETE",
-    }).then((resp) => console.log(resp));
+    }).then(() => loadLikes());
   };
 
   return (
