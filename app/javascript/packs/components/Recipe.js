@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-
+import * as a from "../rdx/actions";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -11,11 +11,11 @@ import {
 } from "react-icons/fa";
 import { ImPinterest2 } from "react-icons/im";
 import { AiOutlineFacebook, AiOutlineMail } from "react-icons/ai";
+import { Likes } from "./Likes.js";
 
-export const Recipe = ({ currentUser }) => {
+export const Recipe = ({ currentUser, dispatch, likes }) => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
-  const [likes, setLikes] = useState();
 
   useEffect(() => {
     fetch(`/api/recipes/${id}`)
@@ -25,14 +25,17 @@ export const Recipe = ({ currentUser }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/recipe_likes/${id}`)
-      .then((resp) => (resp.status == 200 ? resp.json() : null))
-      .then((resp) => {
-        setLikes(resp);
-      });
+    loadLikes();
     return () => {};
   }, []);
 
+  const loadLikes = () => {
+    fetch(`/api/recipe_likes/${id}`)
+      .then((resp) => (resp.status == 200 ? resp.json() : null))
+      .then((resp) => {
+        dispatch(a.loadedLikes(resp));
+      });
+  };
   const showIngredients = (ingredients) => {
     return (
       <ul>
@@ -120,7 +123,7 @@ export const Recipe = ({ currentUser }) => {
       </span>
     );
   };
-  
+
   const likeRecipe = () => {
     const likeData = {
       user_id: currentUser.id,
@@ -133,14 +136,14 @@ export const Recipe = ({ currentUser }) => {
         Accept: "application/json",
       },
       body: JSON.stringify(likeData),
-    }).then((resp) => console.log(resp));
+    }).then(() => loadLikes());
   };
 
   const unlikeRecipe = () => {
     const likedId = likes.find((key) => key.user_id == currentUser.id).id;
     fetch(`/api/likes/${likedId}`, {
       method: "DELETE",
-    }).then((resp) => console.log(resp));
+    }).then(() => loadLikes());
   };
 
   return (
@@ -157,12 +160,7 @@ export const Recipe = ({ currentUser }) => {
           <span className="icon-tip"> 96% WOULD MAKE AGAIN</span>
         </span>
 
-        {likes ? (
-          <span className="icon-tip">
-            <FaRegThumbsUp />
-            <span className="icon-tip"> {likes.length} LIKES</span>
-          </span>
-        ) : null}
+        {likes ? <Likes likes={likes} /> : null}
       </Row>
       <Row>
         <h1>{recipe.name}</h1>
@@ -209,6 +207,7 @@ export const Recipe = ({ currentUser }) => {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.userReducer.user,
+    likes: state.likesReducer.likes,
   };
 };
 
